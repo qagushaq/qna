@@ -34,6 +34,11 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def destroy
+    @question.destroy
+    redirect_to questions_path
+  end
+
   private
 
   def load_question
