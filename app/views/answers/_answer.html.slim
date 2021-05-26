@@ -1,0 +1,4 @@
+- unless answer.errors.present?
+  = answer.body
+  -if current_user&.is_author?(answer)
+    = link_to 'Delete answer', answer_path(answer), method: :delete
