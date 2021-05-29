@@ -1,0 +1,13 @@
+h1= @question.title
+p= @question.body
+
+- if current_user&.is_author?(@question)
+  p= link_to 'Delete question', question_path, method: :delete
+
+= form_with model: [@question, @answer], local: true do |f|
+  = f.label :body
+  = f.text_area :body
+
+  = f.submit 'Answer'
+
+= render @question.answers
