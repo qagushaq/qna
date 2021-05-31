@@ -1,4 +1,12 @@
 - unless answer.errors.present?
+div class="answer" id="answer-#{answer.id}"
+
   = answer.body
   -if current_user&.is_author?(answer)
-    = link_to 'Delete answer', answer_path(answer), method: :delete
+    p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+    p= link_to 'Delete answer', answer_path(answer), method: :delete
+
+= form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }  do |f|
+  = f.label :body, 'Your answer'
+  = f.text_area :body
+  = f.submit 'Save'

@@ -3,6 +3,7 @@ class AnswersController < ApplicationController
   before_action :find_question, only: %i[new create]
   before_action :find_answer, only: %i(show edit update destroy)
   before_action :check_author, only: %i(update destroy)
+  before_action :check_question_author, only: %i(best)
 
   def new
     @answer = Answer.new
@@ -21,11 +22,8 @@ class AnswersController < ApplicationController
   end
 
   def update
-    if @answer.update(answer_params)
-      redirect_to @answer.question
-    else
-      render 'questions/show', notice: 'Your answer succesfully updated.'
-    end
+    @answer.update(answer_params)
+    @question = @answer.question
   end
 
   def destroy
@@ -48,6 +46,11 @@ class AnswersController < ApplicationController
   end
 
   def check_author
-    redirect_to @answer.question, notice: 'You are not the author' unless current_user.is_author?(@answer)
+    redirect_to @answer.question, notice: 'Only author can do it' unless current_user.is_author?(@answer)
+  end
+
+  def check_question_author
+    @question = @answer.question
+    redirect_to @question, notice: 'Only author can do it' unless current_user.is_author?(@question)
   end
 end

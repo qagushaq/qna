@@ -49,44 +49,44 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    context 'with valid attributes' do
-      before { login(user) }
+  context 'with valid attributes' do
+    before { login(user) }
 
-      it 'assigns the requested answer to @answer' do
-        patch :update, params: { id: answer,
-                                 answer: attributes_for(:answer) }
-        expect(assigns(:answer)).to eq answer
-      end
-
-      it 'changes answer attributes' do
-        patch :update, params: { id: answer, answer: { body: 'body' } }
-        answer.reload
-
-        expect(answer.body).to eq 'body'
-      end
-
-      it 'redirects to question' do
-        patch :update, params: { id: answer, answer: attributes_for(:answer) }
-        expect(response).to redirect_to answer.question
-      end
+    it 'assigns the requested answer to @answer' do
+      patch :update, params: { id: answer,
+                               answer: attributes_for(:answer) }, format: :js
+      expect(assigns(:answer)).to eq answer
     end
 
-    context 'with invalid attributes' do
-      before do
-        login(user)
-        patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }
-      end
+    it 'changes answer attributes' do
+      patch :update, params: { id: answer, answer: { body: 'body' } }, format: :js
+      answer.reload
 
-      it 'does not change answer' do
-        answer.reload
-
-        expect(answer.body).to eq 'Answer Text'
-      end
-
-      it 're-renders question' do
-        expect(response).to render_template 'questions/show'
-      end
+      expect(answer.body).to eq 'body'
     end
+
+    it 'renders update' do
+      patch :update, params: { id: answer, answer: attributes_for(:answer) }, format: :js
+      expect(response).to render_template :update
+    end
+  end
+
+  context 'with invalid attributes' do
+    before do
+      login(user)
+      patch :update, params: { id: answer, answer: attributes_for(:answer, :invalid) }, format: :js
+    end
+
+    it 'does not change answer' do
+      answer.reload
+
+      expect(answer.body).to eq 'Answer Text'
+    end
+
+    it 'renders update' do
+      expect(response).to render_template :update
+    end
+  end
 
     context 'for not the author of the answer' do
       let(:not_author) { create(:user) }

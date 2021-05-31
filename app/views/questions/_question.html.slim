@@ -1,0 +1,15 @@
+h1= question.title
+p= question.body
+
+- if current_user&.is_author?(question)
+  p= link_to 'Edit question', '#', class: 'edit-question-link', data: { question_id: question.id }
+  p= link_to 'Delete question', question_path(question), method: :delete
+
+= form_with model: question, class: 'hidden'  do |f|
+  = f.label :title
+  = f.text_area :title
+
+  = f.label :body
+  = f.text_area :body
+
+  = f.submit 'Save'

@@ -1,8 +1,8 @@
-h1= @question.title
-p= @question.body
+.question-errors
+  = render 'shared/errors', resource: @question
 
-.answers
-  = render @question.answers
+.question
+  = render @question
 
 .answer-errors
   = render 'shared/errors', resource: @answer
@@ -11,3 +11,6 @@ p= @question.body
   = f.label :body, 'Your answer'
   = f.text_area :body
   = f.submit 'Answer'
+
+.answers
+  = render @question.answers

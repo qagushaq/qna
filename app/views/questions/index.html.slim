@@ -3,5 +3,5 @@
 
 tr
   td
-    - @questions.each do |question|
-      = question.title
+    - @questions.each do |q|
+      p= link_to q.title, q
