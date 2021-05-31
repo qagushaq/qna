@@ -3,6 +3,8 @@ FactoryBot.define do
     body { "Answer Text" }
     question
     user
+    best { false }
+
 
     trait :invalid do
       body { nil }

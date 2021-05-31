@@ -1,11 +1,21 @@
 - unless answer.errors.present?
-div class="answer" id="answer-#{answer.id}"
-  p= answer.body
-  -if current_user&.is_author?(answer)
-    p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
-    p= link_to 'Delete answer', answer_path(answer), method: :delete
+  div class="answer" id="answer-#{answer.id}"
+    p= answer.body
+    - if current_user&.is_author?(answer.question)
+      - unless answer.best?
+        p= link_to 'Best answer', best_answer_path(answer), class: 'best-answer-link',
+                                                            method: :patch,
+                                                            remote: true
+      - else
+        p= "It's the best answer"
 
-= form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false  do |f|
-  = f.label :body, 'Your answer'
-  = f.text_area :body
-  = f.submit 'Save'
+    -if current_user&.is_author?(answer)
+      p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+      p= link_to 'Delete answer', answer_path(answer), method: :delete, remote: true
+  br
+
+  = form_with model: answer, class: 'hidden', html: { id: "edit-answer-#{answer.id}" }, local: false do |f|
+    = f.label :body, 'Your answer'
+    = f.text_area :body
+
+    = f.submit 'Save'

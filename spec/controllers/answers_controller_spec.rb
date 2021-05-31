@@ -122,6 +122,62 @@ RSpec.describe AnswersController, type: :controller do
     end
   end
 
+  describe 'PATCH #best' do
+    context 'for the author of the question' do
+      before { login(question.user) }
+
+      it 'assigns the requested answer to @answer' do
+        patch :best, params: { id: answer }, format: :js
+        expect(assigns(:answer)).to eq answer
+      end
+
+      it 'changes answer attributes' do
+        patch :best, params: { id: answer }, format: :js
+        answer.reload
+
+        expect(answer).to be_best
+      end
+
+      it 'renders best' do
+        patch :best, params: { id: answer }, format: :js
+        expect(response).to render_template :best
+      end
+    end
+
+    context 'for not the author of the question' do
+      let(:not_author) { create(:user) }
+
+      before do
+        login(not_author)
+        patch :best, params: { id: answer, answer: { best: true } }
+      end
+
+      it 'does not change answer' do
+        answer.reload
+
+        expect(answer).to_not be_best
+      end
+
+      it 'redirects to question' do
+        expect(response).to redirect_to answer.question
+      end
+    end
+
+    context 'for unauthenticated user' do
+      before { patch :best, params: { id: answer, answer: { best: true } } }
+
+      it 'does not change answer' do
+        answer.reload
+
+        expect(answer).to_not be_best
+      end
+
+      it 'redirects to sign up page' do
+        expect(response).to redirect_to new_user_session_path
+      end
+    end
+  end
+  
   describe 'DELETE #destroy' do
     let!(:question) { create(:question) }
     let!(:answer) { create(:answer, question: question, user: user) }

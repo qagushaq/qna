@@ -1,7 +1,7 @@
 class AnswersController < ApplicationController
   before_action :authenticate_user!, except: %i(show)
   before_action :find_question, only: %i[new create]
-  before_action :find_answer, only: %i(show edit update destroy)
+  before_action :find_answer, only: %i(show edit update destroy best)
   before_action :check_author, only: %i(update destroy)
   before_action :check_question_author, only: %i(best)
 
@@ -16,7 +16,7 @@ class AnswersController < ApplicationController
   end
 
   def create
-    @answer = @question.answers.create(answer_params)
+    @answer = @question.answers.new(answer_params)
     @answer.user = current_user
     @answer.save
   end
@@ -26,8 +26,18 @@ class AnswersController < ApplicationController
     @question = @answer.question
   end
 
+  def best
+    @question = @answer.question
+    @answer.make_best!
+  end
+
   def destroy
     @answer.destroy
+  end
+
+  def best
+    @question = @answer.question
+    @answer.make_best!
   end
 
   private
