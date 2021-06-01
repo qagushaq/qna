@@ -7,6 +7,10 @@
 .answer-errors
   = render 'shared/errors', resource: @answer
 
+- if @question.files.attached?
+  - @question.files.each do |file|
+    p= link_to file.filename.to_s, url_for(file)
+
 = form_with model: [@question, @answer], class: 'new-answer', local: false do |f|
   = f.label :body, 'Your answer'
   = f.text_area :body
