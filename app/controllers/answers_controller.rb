@@ -26,11 +26,6 @@ class AnswersController < ApplicationController
     @question = @answer.question
   end
 
-  def best
-    @question = @answer.question
-    @answer.make_best!
-  end
-
   def destroy
     @answer.destroy
   end
