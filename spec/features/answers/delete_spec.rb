@@ -5,14 +5,13 @@ feature 'User can delete answer' do
   given(:answer) { create(:answer, question: question) }
   let!(:user) { create(:user) }
 
-  describe 'Authenticated user tryes to delete answer' do
+  describe 'Authenticated user tryes to delete answer', js: true do
     scenario 'his answer' do
       sign_in(answer.user)
       visit question_path(question)
       expect(page).to have_content 'Answer Text'
 
       click_on 'Delete answer'
-      expect(page).to have_content 'Answer succesfully deleted.'
       expect(page).to_not have_content 'Answer Text'
     end
 

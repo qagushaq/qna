@@ -1,13 +1,18 @@
-h1= @question.title
-p= @question.body
+.question-errors
+  = render 'shared/errors', resource: @question
 
-- if current_user&.is_author?(@question)
-  p= link_to 'Delete question', question_path, method: :delete
+.question
+  = render @question
 
-= form_with model: [@question, @answer], local: true do |f|
-  = f.label :body
+.answer-errors
+  = render 'shared/errors', resource: @answer
+
+= form_with model: [@question, @answer], class: 'new-answer', local: false do |f|
+  = f.label :body, 'Your answer'
   = f.text_area :body
-
   = f.submit 'Answer'
 
-= render @question.answers
+h3= 'Answers:'
+
+.answers
+  = render @question.answers
