@@ -16,7 +16,7 @@ feature 'User can edit his answer', %q{
 
       visit question_path(question)
 
-      click_on 'Edit'
+      click_on 'Edit answer'
 
       within '.answers' do
         fill_in 'Your answer', with: 'edited answer'
@@ -32,7 +32,7 @@ feature 'User can edit his answer', %q{
       sign_in(answer.user)
       visit question_path(question)
 
-      click_on 'Edit'
+      click_on 'Edit answer'
 
       within '.answers' do
         fill_in 'Your answer', with: ''
@@ -49,13 +49,13 @@ feature 'User can edit his answer', %q{
       sign_in(user)
       visit question_path(question)
 
-      expect(page).to_not have_link 'Edit'
+      expect(page).to_not have_link 'Edit answer'
   end
 
     scenario 'Unauthenticated can not edit answer' do
       visit question_path(question)
 
-      expect(page).to_not have_link 'Edit'
+      expect(page).to_not have_link 'Edit answer'
     end
 
   end

@@ -4,7 +4,12 @@
 
     - if answer.files.attached?
       - answer.files.each do |file|
-        = link_to file.filename.to_s, url_for(file)
+        div id="file_#{file.id}"
+          p= link_to file.filename.to_s, url_for(file)
+          - if current_user&.author?(answer)
+            = ' | '
+            = link_to 'Delete file', file_path(file), method: :delete,
+                                                      remote: true
 
     - if current_user&.is_author?(answer.question)
       - unless answer.best?
@@ -15,7 +20,7 @@
         p= "It's the best answer"
 
     -if current_user&.is_author?(answer)
-      p= link_to 'Edit', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
+      p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }
       p= link_to 'Delete answer', answer_path(answer), method: :delete, remote: true
   br
 
