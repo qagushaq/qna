@@ -7,6 +7,10 @@ RSpec.describe Answer, type: :model do
   it { should have_db_index :question_id }
   it { should validate_presence_of :body }
 
+  it 'have many attached files' do
+    expect(Answer.new.files).to be_an_instance_of(ActiveStorage::Attached::Many)
+  end
+
   let(:question) { create(:question) }
   let!(:best_answer) { create(:answer, question: question, best: true) }
   let(:best_answer2) { create(:answer, question: question, best: true) }
