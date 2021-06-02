@@ -3,7 +3,7 @@ require 'rails_helper'
 feature 'User can delete question' do
   given(:question) { create(:question) }
 
-  describe 'Authenticated user tryes to delete question' do
+  describe 'Authenticated user tryes to delete question', js: true do
     scenario 'his question' do
       sign_in(question.user)
       visit question_path(question)
