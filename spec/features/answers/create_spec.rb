@@ -25,6 +25,16 @@ feature 'User can give an answer', %q{
       end
     end
 
+    scenario 'Answers the question with attached file', js: true do
+      fill_in 'Body', with: 'Answer text'
+      attach_file 'File', ["#{Rails.root}/spec/rails_helper.rb", "#{Rails.root}/spec/spec_helper.rb"]
+
+      click_on 'Answer'
+
+      expect(page).to have_link 'rails_helper.rb'
+      expect(page).to have_link 'spec_helper.rb'
+    end
+
     scenario 'Authenticated user creates answer with errors', js: true do
       click_on 'Answer'
 

@@ -50,12 +50,13 @@ feature 'User can choose the best answer of his question' do
     visit question_path(question)
 
     answers = page.all('.answer')
-
     expect(answers.first.native.attribute('id')).to eq "answer-#{best_answer.id}"
 
     click_on 'Best answer'
+    sleep 0.1
 
-    expect(answers.first.native.attribute('id')).to eq "answer-#{answer.id + 1}"
+    new_answers = page.all('.answer')
+    expect(new_answers.first.native.attribute('id')).to eq "answer-#{answer.id}"
   end
 
   scenario 'Unauthenticated user tryes to choose the best answer' do
