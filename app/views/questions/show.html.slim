@@ -11,6 +11,13 @@
   - @question.files.each do |file|
     p= link_to file.filename.to_s, url_for(file)
 
+- if @question.links.!blank?
+  .links
+    p Links:
+    ul
+      - @question.links.each do |link|
+        li= link_to link.name, link.url
+
 = form_with model: [@question, @answer], class: 'new-answer', local: false do |f|
   = f.label :body, 'Your answer'
   = f.text_area :body
