@@ -5,6 +5,7 @@ require("channels")
 require("jquery")
 require ("utilities/answer_edit_form")
 require ("utilities/question_edit_form")
+require("@nathanvda/cocoon")
 
 import "bootstrap"
 
