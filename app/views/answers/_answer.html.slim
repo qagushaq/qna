@@ -1,17 +1,9 @@
 - unless answer.errors.present?
   div class="answer" id="answer-#{answer.id}"
     p= answer.body
-    
-    = render 'shared/links', resource: answer
 
-    - if answer.files.attached?
-      - answer.files.each do |file|
-        div id="file_#{file.id}"
-          p= link_to file.filename.to_s, url_for(file)
-          - if current_user&.author?(answer)
-            = ' | '
-            = link_to 'Delete file', file_path(file), method: :delete,
-                                                      remote: true
+    = render 'shared/links', resource: answer
+    = render 'shared/files', resource: answer
 
     - if current_user&.is_author?(answer.question)
       - unless answer.best?
@@ -31,6 +23,6 @@
     = f.text_area :body
 
     = f.label :files
-    = f.file_field :files, multiple: true
+    = f.file_field :files, multiple: true, direct_upload: true
 
     = f.submit 'Save'
