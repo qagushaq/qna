@@ -25,4 +25,11 @@
     = f.label :files
     = f.file_field :files, multiple: true, direct_upload: true
 
-    = f.submit 'Save'
+    p Links:
+    p
+      = f.fields_for :links do |l|
+        = render 'shared/link_fields', f: l
+      .link
+        = link_to_add_association 'Add link', f, :links, partial: 'shared/link_fields'
+
+      = f.submit 'Save'

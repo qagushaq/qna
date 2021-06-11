@@ -7,5 +7,15 @@ FactoryBot.define do
     trait :invalid do
       title { nil }
     end
+
+    trait :with_file do
+      files { fixture_file_upload("#{Rails.root}/spec/rails_helper.rb") }
+    end
+
+    trait :with_link do
+      after(:create) do |question|
+        create :link, linkable: question
+      end
+    end
   end
 end

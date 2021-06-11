@@ -9,6 +9,7 @@ feature 'User can add links to question', %q{
   given(:user) { create(:user) }
   given(:gist_url) { 'https://gist.github.com/qagushaq/9e8dfcadab09e7bb941bbf6ac0ea1b4d' }
   given(:mail_url) { 'https://mail.ru' }
+  given!(:question) { create(:question) }
 
   scenario 'User adds links when asks question', js: true do
     sign_in(user)
@@ -22,7 +23,7 @@ feature 'User can add links to question', %q{
 
     click_on 'Add link'
 
-    within all('.new-link').last do
+    within all('.nested-fields').last do
       fill_in 'Link name', with: 'Mail'
       fill_in 'Url', with: mail_url
     end
@@ -31,6 +32,32 @@ feature 'User can add links to question', %q{
 
     expect(page).to have_link 'My gist', href: gist_url
     expect(page).to have_link 'Mail', href: mail_url
+  end
+
+  scenario 'User adds links when edits his question', js: true do
+    sign_in(question.user)
+    visit question_path(question)
+
+    click_on 'Edit question'
+
+    within '.question' do
+      click_on 'Add link'
+
+      fill_in 'Link name', with: 'My gist'
+      fill_in 'Url', with: gist_url
+
+      click_on 'Add link'
+
+      within all('.nested_fields').last do
+        fill_in 'Link name', with: 'Mail'
+        fill_in 'Url', with: mail_url
+      end
+
+      click_on 'Save'
+
+      expect(page).to have_link 'My gist', href: gist_url
+      expect(page).to have_link 'Mail', href: mail_url
+    end
   end
 
 end
