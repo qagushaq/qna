@@ -3,6 +3,8 @@ tr
   = ' | '
   td= ("#{question.body}")
 
+  = render 'shared/links', resource: question
+
   -if question.files.attached?
     -question.files.each do |file|
       div id="file_#{file.id}"
