@@ -32,10 +32,9 @@ feature 'User can add links to answer', %q{
 
     click_on 'Answer'
 
-    within '.answers' do
-      expect(page).to have_link 'My gist', href: gist_url
-      expect(page).to have_link 'Mail', href: mail_url
-    end
+    expect(page).to have_link 'My gist', href: gist_url
+    expect(page).to have_link 'Mail', href: mail_url
+
   end
 
   scenario 'User adds links when edits his answer', js: true do
@@ -44,7 +43,7 @@ feature 'User can add links to answer', %q{
 
     click_on 'Edit'
 
-    within '.answer' do
+    within '.answers' do
       click_on 'Add link'
 
       fill_in 'Link name', with: 'My gist'

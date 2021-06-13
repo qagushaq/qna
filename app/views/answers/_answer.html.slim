@@ -12,6 +12,8 @@
                                                             remote: true
       - else
         p= "It's the best answer"
+        - if answer.question.award.present?
+          p= "#{answer.user.email} got the #{answer.question.award.title}"
 
     -if current_user&.is_author?(answer)
       p= link_to 'Edit answer', '#', class: 'edit-answer-link', data: { answer_id: answer.id }

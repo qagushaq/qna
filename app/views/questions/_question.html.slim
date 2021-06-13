@@ -6,6 +6,9 @@ tr
   = render 'shared/links', resource: question
   = render 'shared/files', resource: question
 
+- if question.award.present?
+  p= "The author of the best answer will get #{question.award.title} award"
+
 - if current_user&.is_author?(question)
   p= link_to 'Edit question', '#', class: 'edit-question-link',
                                    data: { question_id: question.id }

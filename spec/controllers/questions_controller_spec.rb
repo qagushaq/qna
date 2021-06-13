@@ -9,7 +9,6 @@ RSpec.describe QuestionsController, type: :controller do
 
     before { get :index }
 
-
     it 'populates an array of all questions' do
       expect(assigns(:questions)).to match_array(questions)
     end
@@ -48,8 +47,12 @@ RSpec.describe QuestionsController, type: :controller do
         expect(assigns(:question)).to be_a_new(Question)
       end
 
-      it 'assigns a new Question to @question' do
+      it 'builds a new Link to @question' do
         expect(assigns(:question).links.first).to be_a_new(Link)
+      end
+
+      it 'builds a new Award to @question' do
+        expect(assigns(:question).award).to be_a_new(Award)
       end
 
       it 'renders new view' do

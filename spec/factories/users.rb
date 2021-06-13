@@ -8,4 +8,10 @@ FactoryBot.define do
     password { '12345678' }
     password_confirmation { '12345678' }
   end
+
+  trait :with_awards do
+    after(:create) do |user|
+      create_list(:award, 2, user: user)
+    end
+  end
 end
