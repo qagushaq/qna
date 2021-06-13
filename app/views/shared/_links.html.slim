@@ -3,4 +3,9 @@
     p Links:
     ul
       - resource.links.each do |link|
-        li = link_to link.name, link.url
+        div id="link_#{link.id}"
+        - if link.gist?
+              script src="#{link.url}.js"
+        - else
+            li
+              = link_to link.name, url_for(link.url), target: "_blank"
