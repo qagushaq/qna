@@ -8,7 +8,7 @@
 .answer-errors
   = render 'shared/errors', resource: @answer
 
-= form_with model: [@question, @answer], class: 'new-answer', data: { type: :html }, local: false do |f|
+= form_with model: [@question, @answer], class: 'new-answer', data: { type: :json }, local: false do |f|
   = f.label :body, 'Your answer'
   = f.text_area :body
 
