@@ -8,6 +8,7 @@
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.4.0",
     "bootstrap": "^5.0.1",
+    "cocoon-js-vanilla": "^1.2.0",
     "jquery": "^3.6.0",
     "popper.js": "^1.16.1",
     "turbolinks": "^5.2.0",

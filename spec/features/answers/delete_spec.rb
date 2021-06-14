@@ -16,9 +16,10 @@ feature 'User can delete answer' do
     end
 
 
-    scenario 'delete question with attached file' do
-      sign_in(author)
+    scenario 'delete question with attached file', js: true do
+      sign_in(answer.user)
       visit question_path(question)
+
       click_on 'Edit answer'
 
       within '.answers' do
@@ -30,7 +31,7 @@ feature 'User can delete answer' do
 
       expect(page).to have_link 'rails_helper.rb'
       expect(page).to have_link 'spec_helper.rb'
-      
+
       within "#file_#{answer.files.first.id}" do
         click_on 'Delete file'
       end

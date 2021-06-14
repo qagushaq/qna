@@ -3,9 +3,11 @@ require("turbolinks").start()
 require("@rails/activestorage").start()
 require("channels")
 require("jquery")
+
+global.jQuery, global.$ = require("jquery");
+
 require ("utilities/answer_edit_form")
 require ("utilities/question_edit_form")
 
 import "bootstrap"
-
-global.jQuery, global.$ = require("jquery");
+import "cocoon-js-vanilla";
