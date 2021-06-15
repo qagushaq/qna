@@ -1,0 +1,21 @@
+.rating id="#{resource.class.to_s.downcase}-#{resource.id}"
+  .rating-count
+    = "Rating: #{resource.rating}"
+
+  - if !current_user&.is_author?(resource) && current_user
+    .vote-links class="#{'hidden' if current_user&.voted?(resource)}"
+      = link_to 'Up', polymorphic_url(resource, action: :vote, voted: { value: 1 }),
+                                            data: { type: :json },
+                                            method: :post,
+                                            remote: true
+      ' 
+      = link_to 'Down', polymorphic_url(resource, action: :vote, voted: { value: -1 }),
+                                            data: { type: :json },
+                                            method: :post,
+                                            remote: true
+    .revote-link class="#{'hidden' unless current_user&.voted?(resource)}"
+      p You voted
+      = link_to 'Revote', polymorphic_url(resource, action: :revote),
+                                          data: { type: :json },
+                                          method: :post,
+                                          remote: true

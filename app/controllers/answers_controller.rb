@@ -1,4 +1,6 @@
 class AnswersController < ApplicationController
+  include Voted
+
   before_action :authenticate_user!, except: %i(show)
   before_action :find_question, only: %i[new create]
   before_action :find_answer, only: %i(show edit update destroy best)
@@ -18,16 +20,7 @@ class AnswersController < ApplicationController
   def create
     @answer = @question.answers.new(answer_params)
     @answer.user = current_user
-
-    respond_to do |format|
-      if @answer.save
-        format.json { render json: @answer }
-      else
-        format.json do
-          render json: @answer.errors.full_messages, status: :unprocessable_entity
-        end
-      end
-    end
+    @answer.save
   end
 
   def update
