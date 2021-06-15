@@ -21,7 +21,7 @@ feature 'User can browse all his awards' do
       expect(page.find('#award-image')['src']).to have_content image_name1
     end
 
-    within "#award-#{question1.award.id}" do
+    within "#award-#{question2.award.id}" do
       expect(page).to have_content question2.title
       expect(page).to have_content question2.award.title
       expect(page.find('#award-image')['src']).to have_content image_name2
