@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
+  it_behaves_like 'voted' do
+    let!(:question) { create(:question, user: author) }
+    let!(:voted) { create(:answer, question: question, user: author) }
+  end
   let(:user) { create(:user) }
   let(:question) { create(:question, user: user) }
   let(:answer) { create(:answer, question: question, user: user) }
@@ -177,7 +181,7 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
-  
+
   describe 'DELETE #destroy' do
     let!(:question) { create(:question) }
     let!(:answer) { create(:answer, question: question, user: user) }

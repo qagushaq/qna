@@ -26,20 +26,20 @@ feature 'User can choose the best answer of his question' do
       sign_in(question.user)
       visit question_path(question)
 
-      within "#answer-#{best_answer.id}" do
+      within "#answer-#{best_answer.id}.answer" do
         expect(page).to have_content "It's the best answer"
       end
 
-      within "#answer-#{answer.id}" do
+      within "#answer-#{answer.id}.answer" do
         expect(page).to have_link 'Best answer'
         click_on 'Best answer'
       end
 
-      within "#answer-#{best_answer.id}" do
+      within "#answer-#{best_answer.id}.answer" do
         expect(page).to have_link 'Best answer'
       end
 
-      within "#answer-#{answer.id}" do
+      within "#answer-#{answer.id}.answer" do
         expect(page).to have_content "It's the best answer"
       end
     end
