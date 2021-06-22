@@ -6,6 +6,7 @@ tr
   = render 'shared/links', resource: question
   = render 'shared/files', resource: question
   = render 'shared/rating', resource: question
+  = render 'comments/comments', resource: question
 
 - if question.award.present?
   p= "The author of the best answer will get #{question.award.title} award"

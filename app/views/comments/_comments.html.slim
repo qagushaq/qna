@@ -1,0 +1,12 @@
+div class="comments-#{resource.class.to_s.downcase}-#{resource.id}"
+  div id="comment-errors-#{resource.class.to_s.downcase}-#{resource.id}"
+
+  - if current_user
+    = form_with model: [resource, Comment.new], local: false do |f|
+      p
+        = f.label :body, 'Comment', for: "comment-body-#{resource.class.to_s.downcase}-#{resource.id}"
+        = f.text_area :body, id: "comment-body-#{resource.class.to_s.downcase}-#{resource.id}"
+
+      p= f.submit 'Comment'
+
+  =render resource.comments

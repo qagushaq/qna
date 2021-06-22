@@ -10,6 +10,7 @@ global.jQuery, global.$ = require("jquery");
 require ("utilities/answer_edit_form")
 require ("utilities/question_edit_form")
 require ("utilities/vote")
+require ("utilities/comment_channel")
 
 import "bootstrap"
 import "cocoon-js-vanilla";
