@@ -15,7 +15,9 @@ tr
                                    data: { question_id: question.id }
   p= link_to 'Delete question', question_path(question), method: :delete
 
-= form_with model: question, class: 'hidden', local: false  do |f|
+
+= form_with model: question, class: 'hidden', html: { id: "edit-question-#{question.id}" }, local: false do |f|
+
   = f.label :title
   = f.text_area :title
 

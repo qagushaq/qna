@@ -1,7 +1,6 @@
 - if current_user
   p= link_to 'Ask question', new_question_path
 
-tr
-  td
-    - @questions.each do |q|
-      p= link_to q.title, q
+.questions
+  - @questions.each do |question|
+    = render 'question_title', question: question
