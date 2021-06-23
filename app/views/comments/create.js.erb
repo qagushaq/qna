@@ -1,0 +1,8 @@
+<% commented_id = "#{@commented.class.to_s.downcase}-#{@commented.id}" %>
+
+$("#comment-errors-<%= commented_id %>").html('<%= render 'shared/errors', resource: @comment %>');
+
+<% if @comment.persisted? %>
+  $(".comments-<%= commented_id %>").append('<%= j render @comment %>');
+  $("#comment-body-<%= commented_id %>").val('');
+<% end %>

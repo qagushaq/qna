@@ -5,6 +5,8 @@ class QuestionsController < ApplicationController
   before_action :load_question, only: %i[show edit update destroy]
   before_action :check_author, only: %i(update destroy)
 
+  after_action :publish_question, only: %i(create)
+
   def index
     @questions = Question.all
   end
@@ -25,12 +27,7 @@ class QuestionsController < ApplicationController
 
   def create
     @question = current_user.questions.new(question_params)
-
-    if @question.save
-      redirect_to @question, notice: 'Your question successfully created.'
-    else
-      render :new
-    end
+    redirect_to @question, notice: 'Your question successfully created.' if @question.save
   end
 
   def update
@@ -46,6 +43,7 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.with_attached_files.find(params[:id])
+    gon.question_id = @question.id
   end
 
   def question_params
@@ -57,4 +55,17 @@ class QuestionsController < ApplicationController
   def check_author
     redirect_to @question, notice: 'You are not the author' unless current_user.is_author?(@question)
   end
+
+  def publish_question
+    return if @question.errors.any?
+
+    ActionCable.server.broadcast(
+      'questions',
+      ApplicationController.render(
+        partial: 'questions/question_title',
+        locals: { question: @question }
+      )
+    )
+  end
+
 end

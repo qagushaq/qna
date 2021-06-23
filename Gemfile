@@ -30,6 +30,8 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'slim-rails'
 gem 'devise'
 gem 'cocoon'
+gem 'gon'
+gem 'skim'
 
 gem 'google-cloud-storage'
 

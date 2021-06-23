@@ -7,6 +7,8 @@ class AnswersController < ApplicationController
   before_action :check_author, only: %i(update destroy)
   before_action :check_question_author, only: %i(best)
 
+  after_action :publish_answer, only: %i(create)
+
   def new
     @answer = Answer.new
   end
@@ -59,5 +61,28 @@ class AnswersController < ApplicationController
   def check_question_author
     @question = @answer.question
     redirect_to @question, notice: 'Only author can do it' unless current_user.is_author?(@question)
+  end
+
+  def publish_answer
+    return if @answer.errors.any?
+
+    files = @answer.files.map do |file|
+      {
+        id: file.id,
+        url: url_for(file),
+        name: file.filename.to_s
+      }
+    end
+
+    data = {
+      answer: @answer,
+      rating: @answer.rating,
+      links: @answer.links,
+      files: files,
+      class_name: @answer.class.to_s.downcase,
+      question_user_id: @answer.question.user.id
+    }
+
+    ActionCable.server.broadcast("question_#{@answer.question.id}", data)
   end
 end
