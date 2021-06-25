@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    title QNA
+    = Gon::Base.render_data
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
+    = action_cable_meta_tag
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_pack_tag 'application', 'data-turbolinks-track': 'reload'
+    = stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload'
+  body
+    .navbar-fixed
+      nav
+        .nav-wrapper class="#{ request.subdomains.first == 'green' ? 'light-green' : 'light-blue' }"
+          = link_to 'Home', root_path, class: 'brand-logo'
+          ul#nav-mobile.hide-on-med-and-down.right
+          =render 'layouts/header'
+
+.container
+  .row
+    .col-lg-9
+      = yield
