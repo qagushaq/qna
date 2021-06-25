@@ -35,7 +35,6 @@ gem 'skim'
 gem 'omniauth'
 gem 'omniauth-github'
 
-
 gem 'google-cloud-storage'
 
 
