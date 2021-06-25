@@ -32,6 +32,9 @@ gem 'devise'
 gem 'cocoon'
 gem 'gon'
 gem 'skim'
+gem 'omniauth'
+gem 'omniauth-github'
+
 
 gem 'google-cloud-storage'
 
