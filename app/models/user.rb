@@ -8,7 +8,7 @@ class User < ApplicationRecord
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:github]
+         :confirmable, :omniauthable, omniauth_providers: %i(github vkontakte)
 
   def create_authorization(auth)
     self.authorizations.create(provider: auth.provider, uid: auth.uid)

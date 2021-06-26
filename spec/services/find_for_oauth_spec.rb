@@ -1,26 +1,38 @@
 require 'rails_helper'
 
 RSpec.describe FindForOauth do
-  let!(:user) {create(:user)}
-  let(:auth) {OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456')}
-  subject { FindForOauth.new(auth) }
+  let!(:user) { create(:user) }
+  let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook', uid: '123') }
+  subject { service = FindForOauth.new(auth) }
 
   context 'user already has authorization' do
+    let!(:authorizations) { user.authorizations.create(provider: 'facebook', uid: '123') }
+
     it 'returns the user' do
-      user.authorizations.create(provider: 'facebook', uid: '123456')
       expect(subject.call).to eq user
+    end
+
+    it 'do not create new user' do
+      expect { subject.call }.to_not change(User, :count)
+    end
+
+    it 'do not create new authorization' do
+      expect { subject.call }.to_not change(Authorization, :count)
     end
   end
 
-  context 'user has not authorization' do
+  context 'user has no authorization' do
     context 'user already exists' do
-      let(:auth) {OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456', info: {email: user.email})}
+      let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook',
+                                          uid: '123',
+                                          info: { email: user.email }) }
+
       it 'does not create new user' do
-        expect {subject.call}.to_not change(User, :count)
+        expect { subject.call }.to_not change(User, :count)
       end
 
       it 'creates authorization for user' do
-        expect {subject.call}.to change(user.authorizations, :count).by(1)
+        expect { subject.call }.to change(user.authorizations, :count).by(1)
       end
 
       it 'creates authorization with provider and uid' do
@@ -36,10 +48,12 @@ RSpec.describe FindForOauth do
     end
 
     context 'user does not exist' do
-      let(:auth) {OmniAuth::AuthHash.new(provider: 'facebook', uid: '123456', info: {email: 'new@user.com'})}
+      let(:auth) { OmniAuth::AuthHash.new(provider: 'facebook',
+                                          uid: '123',
+                                          info: { email: 'new@user.com' }) }
 
       it 'creates new user' do
-        expect {subject.call}.to change(User, :count).by(1)
+        expect { subject.call }.to change(User, :count).by(1)
       end
 
       it 'returns new user' do
