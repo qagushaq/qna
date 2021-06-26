@@ -72,6 +72,9 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (>= 1.5, < 3.0)
       xpath (~> 3.2)
+    capybara-email (3.0.2)
+      capybara (>= 2.4, < 4.0)
+      mail
     childprocess (3.0.0)
     cocoon (1.2.15)
     coffee-script (2.4.1)
@@ -162,6 +165,8 @@ GEM
     jwt (2.2.3)
     launchy (2.5.0)
       addressable (~> 2.7)
+    letter_opener (1.7.0)
+      launchy (~> 2.2)
     listen (3.5.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -365,6 +370,7 @@ DEPENDENCIES
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)
+  capybara-email
   cocoon
   devise
   factory_bot_rails
@@ -372,6 +378,7 @@ DEPENDENCIES
   google-cloud-storage
   jbuilder (~> 2.7)
   launchy
+  letter_opener
   listen (~> 3.2)
   omniauth
   omniauth-github
