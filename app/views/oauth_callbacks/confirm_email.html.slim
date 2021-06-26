@@ -1,0 +1,7 @@
+h1 Confirm Email
+
+= form_with model: @user, url: confirm_email_path, method: :patch, local: false do |f|
+  p= f.label :email
+  p= f.text_field :email, autofocus: true, value: nil
+
+  p= f.submit 'Continue'
