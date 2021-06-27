@@ -32,6 +32,9 @@ gem 'devise'
 gem 'cocoon'
 gem 'gon'
 gem 'skim'
+gem 'omniauth'
+gem 'omniauth-github'
+gem 'omniauth-vkontakte'
 
 gem 'google-cloud-storage'
 
@@ -42,6 +45,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 5.0.0'
   gem 'factory_bot_rails'
   gem 'rexml'
+  gem 'letter_opener'
 
 end
 
@@ -63,6 +67,8 @@ group :test do
   gem 'shoulda-matchers'
   gem 'rails-controller-testing'
   gem 'launchy'
+  gem 'capybara-email'
+
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
