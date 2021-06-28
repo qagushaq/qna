@@ -1,10 +1,18 @@
-require("@rails/ujs").start()
-require("turbolinks").start()
-require("@rails/activestorage").start()
-require("channels")
+import Rails from "@rails/ujs"
+import Turbolinks from "turbolinks"
+import * as ActiveStorage from "@rails/activestorage"
+import "channels"
+import "bootstrap"
+import "cocoon-js-vanilla";
+
+Rails.start()
+Turbolinks.start()
+ActiveStorage.start()
+
+require("action_cable")
 require("jquery")
+require("cocoon")
 require("skim")
-require("gon")
 global.jQuery, global.$ = require("jquery");
 
 require ("utilities/answer_edit_form")
@@ -12,5 +20,5 @@ require ("utilities/question_edit_form")
 require ("utilities/vote")
 require ("utilities/comment_channel")
 
-import "bootstrap"
-import "cocoon-js-vanilla";
+let App = App || {}
+App.cable = ActionCable.createConsumer();
