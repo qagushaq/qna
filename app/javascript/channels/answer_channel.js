@@ -1,8 +1,8 @@
 $(document).on('turbolinks:load', function(){
   App.cable.subscriptions.create('AnswersChannel', {
     connected: function() {
-      var question_id = gon.question_id
-      this.perform('follow', {id: question_id});
+      let question_id = gon.question_id;
+      return this.perform('follow', {id: question_id});
     },
 
     received: function(data) {
